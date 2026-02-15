@@ -1,0 +1,71 @@
+.sensiplay-logo {
+    width: 100%;
+    box-sizing: border-box;
+    text-align: left;
+    margin-left: 0;
+    padding-left: 50px;
+    height: auto;
+    position: relative;
+    color: rgb(201, 43, 43);
+    font-family: 'sensiplay', sans-serif;
+    animation: fadeIn 2s ease-in-out;
+    font-size: 20px;
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1.0;
+    }
+}
+
+body {
+    background-color: rgb(0, 10, 25);
+    min-height: 100vh;
+    margin: 0;
+}
+
+/* Evita espaço fantasma ao mover/scrollar a tela */
+html,
+body {
+    overflow-x: hidden;
+}
+
+.texto-central {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    color: #ffffff;
+    font-family: 'gordinha', sans-serif;
+    font-size: 48px;
+    margin-top: 30px;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: 6px;
+    text-align: center;
+    max-width: 500px;
+    animation: fadeIn 2s ease-in-out;
+}
+
+.contato {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    margin-bottom: 60px;
+}
+
+.contato__titulo {
+    color: #ffffff;
+    animation: fadeIn 1.s ease-in-out;
+}
+
+.contato__texto {
+    color: #cccccc;
+    animation: fadeIn 1.4s ease-in-out;
+}

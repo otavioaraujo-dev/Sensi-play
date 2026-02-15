@@ -1,0 +1,20 @@
+@font-face {
+    font-family: 'sensiplay';
+    src: url('../../2-assets/3-fonts/sensi-play.woff2') format('woff2'),
+        url('../../2-assets/3-fonts/sensi-play.woff') format('woff'),
+        url('../../2-assets/3-fonts/sensi-play.ttf') format('truetype'),
+        url('../../2-assets/3-fonts/sensi-play.otf') format('opentype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
+
+@font-face {
+    font-family: 'gordinha';
+    src: url('../../2-assets/3-fonts/gordinha.woff2') format('woff2'),
+        url('../../2-assets/3-fonts/gordinha.otf') format('opentype'),
+        url('../../2-assets/3-fonts/gordinha.ttf') format('truetype');
+    font-weight: normal;
+    font-style: normal;
+    font-display: swap;
+}
