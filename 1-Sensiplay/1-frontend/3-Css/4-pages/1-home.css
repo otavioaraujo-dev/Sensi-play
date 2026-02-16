@@ -6,10 +6,17 @@
     padding-left: 50px;
     height: auto;
     position: relative;
-    color: rgb(201, 43, 43);
-    font-family: 'sensiplay', sans-serif;
     animation: fadeIn 2s ease-in-out;
-    font-size: 20px;
+    display: flex;
+    align-items: center;
+    margin-top: 2%;
+}
+
+.logo-img {
+    height: 50px;
+    width: auto;
+    display: block;
+    animation: fadeIn 1s ease-in-out;
 }
 
 @keyframes fadeIn {
@@ -60,9 +67,9 @@ body {
     margin-bottom: 60px;
 }
 
-.contato__titulo {
+.contato-titulo {
     color: #ffffff;
-    animation: fadeIn 1.s ease-in-out;
+    animation: fadeIn 1.8s ease-in-out;
 }
 
 .contato__texto {
