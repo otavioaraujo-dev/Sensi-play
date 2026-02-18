@@ -1,0 +1,16 @@
+{
+  "name": "sensplay-frontend",
+  "version": "1.0.0",
+  "description": "Sensplay Frontend - HTML/CSS/JS puro com Vite",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "preview": "vite preview",
+    "serve": "npx http-server . -p 5500"
+  },
+  "devDependencies": {
+    "vite": "^5.0.0"
+  },
+  "dependencies": {}
+}

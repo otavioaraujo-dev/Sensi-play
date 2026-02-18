@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sensplay - Home</title>
+    <link rel="stylesheet" href="../3-Css/4-pages/5-filmes.css">
+    <link rel="stylesheet" href="../3-Css/4-pages/7-home-tabs.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body class="layout-sidebar">
+    <!-- SIDEBAR LATERAL -->
+    <aside class="sidebar">
+        <div class="sidebar-logo">
+            <img src="../2-assets/1-images/logo/sensilogo.png" alt="Sensplay" class="logo-img">
+        </div>
+        <nav class="sidebar-nav">
+            <button class="tab-button active" data-tab="filmes">
+                <i class="fas fa-film"></i> Filmes
+            </button>
+            <button class="tab-button" data-tab="series">
+                <i class="fas fa-tv"></i> Séries
+            </button>
+            <button class="tab-button" data-tab="esportes">
+                <i class="fas fa-football"></i> Esportes
+            </button>
+            <button class="tab-button" data-tab="tv-aberta">
+                <i class="fas fa-broadcast-tower"></i> TV Aberta
+            </button>
+        </nav>
+    </aside>
+
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main class="netflix-container">
+        <!-- ========== TAB 1: FILMES ========== -->
+        <div id="filmes-tab" class="tab-content active">
+            <!-- Barra de busca -->
+            <div class="search-bar">
+                <input type="text" id="search-input" placeholder="Buscar filmes...">
+                <button id="search-btn">Buscar</button>
+                <div id="search-suggestions" class="search-suggestions" aria-hidden="true"></div>
+            </div>
+
+            <!-- Categoria 1: Populares -->
+            <section class="category">
+                <h2>Filmes Populares</h2>
+                <div class="row posters" id="popular-movies"></div>
+            </section>
+
+            <!-- Categoria 2: Ação -->
+            <section class="category">
+                <h2>Ação e Aventura</h2>
+                <div class="row posters" id="action-movies"></div>
+            </section>
+
+            <!-- Categoria 3: Comédia -->
+            <section class="category">
+                <h2>Comédias</h2>
+                <div class="row posters" id="comedy-movies"></div>
+            </section>
+        </div>
+
+        <!-- ========== TAB 2: SÉRIES ========== -->
+        <div id="series-tab" class="tab-content">
+            <!-- Barra de busca -->
+            <div class="search-bar">
+                <input type="text" id="search-input-series" placeholder="Buscar séries...">
+                <button id="search-btn-series">Buscar</button>
+                <div id="search-suggestions-series" class="search-suggestions" aria-hidden="true"></div>
+            </div>
+
+            <!-- Séries: Populares -->
+            <section class="category">
+                <h2>Séries Populares</h2>
+                <div class="row posters" id="tv-popular-movies"></div>
+            </section>
+
+            <!-- Séries: Ação & Aventura -->
+            <section class="category">
+                <h2>Séries Ação & Aventura</h2>
+                <div class="row posters" id="tv-action-movies"></div>
+            </section>
+
+            <!-- Séries: Comédia -->
+            <section class="category">
+                <h2>Séries Comédia</h2>
+                <div class="row posters" id="tv-comedy-movies"></div>
+            </section>
+        </div>
+
+        <!-- ========== TAB 3: ESPORTES ========== -->
+        <div id="esportes-tab" class="tab-content">
+            <section class="category">
+                <h2>Esportes Ao Vivo</h2>
+                <p class="tab-info">💡 Embeds ao vivo de futebol, NBA, MMA e outros esportes. Fonte: embedtvonline.com</p>
+                <div class="embeds-grid" id="esportes-embeds">
+                    <!-- Canais de esportes com embeds -->
+                    <div class="embed-card">
+                        <h3>SporTV</h3>
+                        <iframe 
+                            src="https://embedtvonline.com/sportv" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="embed-card">
+                        <h3>ESPN</h3>
+                        <iframe 
+                            src="https://embedtvonline.com/espn" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="embed-card">
+                        <h3>TNT</h3>
+                        <iframe 
+                            src="https://embedtvonline.com/tnt" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen>
+                        </iframe>
+                    </div>
+                     <div class="embed-card">
+                        <h3>Caze Tv</h3>
+                        <iframe 
+                            src="https://embedtvonline.com/cazetv" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen>
+                        </iframe>
+                    </div>    
+                     <div class="embed-card">
+                        <h3>Combate</h3>
+                        <iframe 
+                            src="https://embedtvonline.com/combate" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen>
+                        </iframe>
+                    </div>
+                     <div class="embed-card">
+                        <h3>TNT</h3>
+                        <iframe 
+                            src="https://embedtvonline.com/tnt" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen>
+                        </iframe>
+                    </div>
+
+
+
+
+
+
+                    </div>
+                </div>
+                <div class="embed-info">
+                    <p><strong>ℹ️ Dica:</strong> Para adicionar mais canais de esportes, visite <a href="https://embedtvonline.com" target="_blank">embedtvonline.com</a>, 
+                    procure em "Esportes", encontre o canal desejado, clique "Copiado!" e atualize o src do iframe aqui.</p>
+                </div>
+            </section>
+        </div>
+
+        <!-- ========== TAB 4: TV ABERTA ========== -->
+        <div id="tv-aberta-tab" class="tab-content">
+            <section class="category">
+                <h2>Canais Abertos</h2>
+                <p class="tab-info">📺 Transmissões ao vivo de TV aberta. Fonte: embedtvonline.com</p>
+                <div class="embeds-grid" id="tv-aberta-embeds">
+                    <!-- Canais de TV Aberta -->
+                    <div class="embed-card">
+                        <h3>Globo SP</h3>
+                        <div class="embed-content">
+                            <img 
+                                src="https://upload.wikimedia.org/wikipedia/commons/7/7e/Logo_Rede_Globo.svg"
+                                alt="Capa Globo SP"
+                                style="width:100%; height:100%; object-fit:cover;"
+                            >
+                        </div>
+                    </div>
+                    <div class="embed-card">
+                        <h3>Globo RJ</h3>
+                        <iframe 
+                            src="https://embedtvonline.com/embed/globo-rj" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="embed-card">
+                        <h3>Record SP</h3>
+                        <iframe 
+                            src="https://embedtvonline.com/embed/record-sp" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="embed-card">
+                        <h3>SBT SP</h3>
+                        <iframe 
+                            src="https://embedtvonline.com/embed/sbt-sp" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="embed-card">
+                        <h3>Band SP</h3>
+                        <iframe 
+                            src="https://embedtvonline.com/embed/band-sp" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="embed-card">
+                        <h3>RedeTV!</h3>
+                        <iframe 
+                            src="https://embedtvonline.com/embed/rede-tv" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen>
+                        </iframe>
+                    </div>
+                    <div class="embed-card">
+                        <h3>TV Cultura</h3>
+                        <iframe 
+                            src="https://embedtvonline.com/embed/tv-cultura" 
+                            width="100%" 
+                            height="400" 
+                            frameborder="0" 
+                            allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                            allowfullscreen
+                            webkitallowfullscreen
+                            mozallowfullscreen>
+                        </iframe>
+                    </div>
+                </div>
+                <div class="embed-info">
+                    <p><strong>ℹ️ Dica:</strong> Para adicionar mais canais, visite <a href="https://embedtvonline.com" target="_blank">embedtvonline.com</a>, 
+                    procure em "Canais Abertos", encontre o canal desejado, clique "Copiado!" e atualize o src do iframe aqui.</p>
+                </div>
+            </section>
+        </div>
+    </main>
+
+    <!-- Modal para player (Filmes e Séries) -->
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-overview"></p>
+            <div class="player-container">
+                <iframe id="movie-player" frameborder="0"
+                    allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                    allowfullscreen
+                    webkitallowfullscreen
+                    mozallowfullscreen></iframe>
+            </div>
+            <div class="server-options">
+                <label>Servidor: </label>
+                <select id="server-select">
+                    <option value="1">Servidor 1</option>
+                    <option value="2" selected>Servidor 2</option>
+                    <option value="3">Servidor 3</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <script src="../4-js/5-pages/7-home.js"></script>
+</body>
+</html>

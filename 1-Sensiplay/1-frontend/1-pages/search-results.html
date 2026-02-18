@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Resultados da Busca - Sensplay</title>
+    <link rel="stylesheet" href="../3-Css/4-pages/5-filmes.css">
+    <link rel="stylesheet" href="../3-Css/4-pages/search-results.css">
+</head>
+<body>
+    <header>
+        <h1>Resultados da Busca</h1>
+        <div class="search-bar">
+            <input type="text" id="search-input" placeholder="Buscar filmes e séries...">
+            <button id="search-btn">Buscar</button>
+            <div id="search-suggestions" class="search-suggestions" aria-hidden="true"></div>
+        </div>
+    </header>
+
+    <main class="netflix-container">
+        <section class="top-row" id="top-results">
+            <h2>Top 3</h2>
+            <div class="row posters" id="top-3-row"></div>
+        </section>
+
+        <section class="grid-section">
+            <h2>Mais resultados</h2>
+            <div class="grid-results" id="grid-results"></div>
+            <p id="no-results" style="display:none; color:#bbb;">Nenhum resultado encontrado.</p>
+        </section>
+    </main>
+
+    <!-- Modal (mesmo do filmes) -->
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-overview"></p>
+            <div class="player-container">
+                <iframe id="movie-player" frameborder="0"
+                    allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                    allowfullscreen
+                    webkitallowfullscreen
+                    mozallowfullscreen></iframe>
+            </div>
+            <div class="server-options">
+                <label>Servidor: </label>
+                <select id="server-select">
+                    <option value="1">Servidor 1</option>
+                    <option value="2" selected>Servidor 2</option>
+                    <option value="3">Servidor 3</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <script src="../4-js/5-pages/search-results.js"></script>
+</body>
+</html>

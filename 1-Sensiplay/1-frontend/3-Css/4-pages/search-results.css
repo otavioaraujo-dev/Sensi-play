@@ -1,0 +1,15 @@
+/* search-results.css */
+.top-row { margin-bottom: 16px; }
+.top-row .row img { width: 180px; margin-right: 10px; border-radius: 6px; }
+.grid-results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; }
+.grid-card img { width: 100%; border-radius: 6px; }
+.grid-title { color: #ddd; margin-top: 6px; font-size: 14px; }
+
+@media (max-width: 768px) {
+    .grid-results { grid-template-columns: repeat(2, 1fr); }
+    .top-row .row img { width: 140px; }
+}
+
+@media (max-width: 480px) {
+    .grid-results { grid-template-columns: repeat(1, 1fr); }
+}

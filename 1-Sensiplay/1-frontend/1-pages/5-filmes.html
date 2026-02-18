@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Filmes - Sensplay</title>
+    <link rel="stylesheet" href="../3-Css/4-pages/5-filmes.css">
+    <!-- Opcional: Font Awesome pra ícones (close, etc.) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Header simples (copie do seu projeto se tiver menu) -->
+    <header>
+        <h1>Sensplay - Filmes</h1>
+        <!-- Adicione links: <a href="4-dashboard.html">Voltar</a> -->
+    </header>
+
+    <!-- Barra de busca -->
+    <div class="search-bar">
+        <input type="text" id="search-input" placeholder="Buscar filmes...">
+        <button id="search-btn">Buscar</button>
+        <div id="search-suggestions" class="search-suggestions" aria-hidden="true"></div>
+    </div>
+
+    <main class="netflix-container">
+        <!-- Categoria 1: Populares -->
+        <section class="category">
+            <h2>Filmes Populares</h2>
+            <div class="row posters" id="popular-movies"></div>
+        </section>
+
+        <!-- Categoria 2: Ação -->
+        <section class="category">
+            <h2>Ação e Aventura</h2>
+            <div class="row posters" id="action-movies"></div>
+        </section>
+
+        <!-- Categoria 3: Comédia (adicione mais se quiser) -->
+        <section class="category">
+            <h2>Comédias</h2>
+            <div class="row posters" id="comedy-movies"></div>
+        </section>
+
+        <!-- Séries: Populares -->
+        <section class="category">
+            <h2>Séries Populares</h2>
+            <div class="row posters" id="tv-popular-movies"></div>
+        </section>
+
+        <!-- Séries: Ação -->
+        <section class="category">
+            <h2>Séries Ação & Aventura</h2>
+            <div class="row posters" id="tv-action-movies"></div>
+        </section>
+
+        <!-- Séries: Comédia -->
+        <section class="category">
+            <h2>Séries Comédia</h2>
+            <div class="row posters" id="tv-comedy-movies"></div>
+        </section>
+
+        <!-- Resultados da busca -->
+        <section class="category" id="search-results-section" style="display:none;">
+            <h2>Resultados da Busca</h2>
+            <div class="row posters" id="search-results"></div>
+            <p id="search-empty-message" style="display:none; color: #bbb; margin-top: 10px;">Nenhum filme encontrado.</p>
+        </section>
+    </main>
+
+    <!-- Modal para player e detalhes -->
+    <div id="movie-modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <h2 id="modal-title"></h2>
+            <p id="modal-overview"></p>
+            <div class="player-container">
+                <iframe id="movie-player" frameborder="0"
+                    allow="autoplay; fullscreen; encrypted-media; picture-in-picture"
+                    allowfullscreen
+                    webkitallowfullscreen
+                    mozallowfullscreen></iframe>
+            </div>
+            <!-- Opcional: Seletor de servidor -->
+            <div class="server-options">
+                <label>Servidor: </label>
+                <select id="server-select">
+                    <option value="1">Servidor 1</option>
+                    <option value="2" selected>Servidor 2</option>
+                    <option value="3">Servidor 3</option>
+                </select>
+            </div>
+        </div>
+    </div>
+
+    <script src="../4-js/5-pages/5-filmes.js"></script>
+</body>
+</html>
