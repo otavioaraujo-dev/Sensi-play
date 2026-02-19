@@ -169,42 +169,59 @@ async function fetchSuggestions(query) {
         if (!query || query.trim().length < 1) return [];
         const url = `${API_BASE_URL}/search?query=${encodeURIComponent(query)}`;
         const resp = await fetch(url);
-        if (!resp.ok) return [];
+        if (!resp.ok) {
+            console.warn('Erro na busca de sugestões:', resp.status);
+            return [];
+        }
         const data = await resp.json();
-        return (data.results || []).slice(0, 6);
+        const results = (data.results || []).slice(0, 6);
+        console.log(`Sugestões encontradas: ${results.length}`);
+        return results;
     } catch (e) {
-        console.error('Sugestões erro:', e);
+        console.error('Erro ao buscar sugestões:', e);
         return [];
     }
 }
 
 function showSuggestions(items, suggestionsBoxId) {
     const box = document.getElementById(suggestionsBoxId);
-    if (!box) return;
+    if (!box) {
+        console.warn(`Container de sugestões não encontrado: ${suggestionsBoxId}`);
+        return;
+    }
+    
     box.innerHTML = '';
+    
     if (!items || items.length === 0) {
         box.style.display = 'none';
         box.setAttribute('aria-hidden', 'true');
         return;
     }
+    
     items.forEach(movie => {
         const item = document.createElement('div');
         item.className = 'search-suggestion-item';
+        
         const title = document.createElement('div');
         title.className = 'search-suggestion-title';
         title.textContent = movie.title || movie.name || 'Título';
+        
         const sub = document.createElement('div');
         sub.className = 'search-suggestion-sub';
-        sub.textContent = movie.release_date ? movie.release_date.substring(0, 4) : '';
+        sub.textContent = movie.release_date ? movie.release_date.substring(0, 4) : movie.first_air_date ? movie.first_air_date.substring(0, 4) : '';
+        
         item.appendChild(title);
-        item.appendChild(sub);
+        if (sub.textContent) item.appendChild(sub);
+        
         item.onclick = () => {
             const q = movie.title || movie.name || '';
             showSuggestions([], suggestionsBoxId);
             window.location.href = `/1-pages/search-results.html?query=${encodeURIComponent(q)}`;
         };
+        
         box.appendChild(item);
     });
+    
     box.style.display = 'block';
     box.setAttribute('aria-hidden', 'false');
 }
@@ -223,79 +240,84 @@ function showSuggestions(items, suggestionsBoxId) {
     fetchAndRenderMovies('/tv/action', 'tv-action-movies', 'tv');
     fetchAndRenderMovies('/tv/comedy', 'tv-comedy-movies', 'tv');
 
-    // ========== BUSCA - FILMES ==========
-    const searchInputFilmes = document.getElementById('search-input');
-    const searchBtnFilmes = document.getElementById('search-btn');
+    // ========== SETUP GENÉRICO DE BUSCA ==========
+    // Função para setup de qualquer campo de busca
+    function setupSearchHandlers(inputId, suggestionsBoxId, btnId) {
+        const searchInput = document.getElementById(inputId);
+        const searchBtn = document.getElementById(btnId);
+        const suggestionsBox = document.getElementById(suggestionsBoxId);
+        let blurTimeout = null;
 
-    if (searchBtnFilmes && searchInputFilmes) {
-        searchBtnFilmes.onclick = () => {
-            const q = searchInputFilmes.value.trim();
+        if (!searchInput || !searchBtn || !suggestionsBox) {
+            console.warn(`Missing elements for search: ${inputId}, ${btnId}, or ${suggestionsBoxId}`);
+            return;
+        }
+
+        searchBtn.onclick = () => {
+            const q = searchInput.value.trim();
             if (!q) return;
             window.location.href = `/1-pages/search-results.html?query=${encodeURIComponent(q)}`;
         };
 
-        searchInputFilmes.addEventListener('input', (e) => {
+        searchInput.addEventListener('input', (e) => {
             const q = e.target.value;
             if (searchTimeout) clearTimeout(searchTimeout);
             if (suggestionTimeout) clearTimeout(suggestionTimeout);
 
             if (!q || q.length < 2) {
-                showSuggestions([], 'search-suggestions');
+                showSuggestions([], suggestionsBoxId);
                 return;
             }
 
+            // Fetch suggestions com delay de 300ms
             suggestionTimeout = setTimeout(async () => {
                 const sug = await fetchSuggestions(q);
-                showSuggestions(sug, 'search-suggestions');
-            }, 200);
+                showSuggestions(sug, suggestionsBoxId);
+            }, 300);
         });
 
-        searchInputFilmes.addEventListener('keydown', (e) => {
+        searchInput.addEventListener('keydown', (e) => {
             if (e.key === 'Enter') {
                 e.preventDefault();
-                const q = searchInputFilmes.value.trim();
+                const q = searchInput.value.trim();
                 if (!q) return;
                 window.location.href = `/1-pages/search-results.html?query=${encodeURIComponent(q)}`;
             }
         });
-    }
 
-    // ========== BUSCA - SÉRIES ==========
-    const searchInputSeries = document.getElementById('search-input-series');
-    const searchBtnSeries = document.getElementById('search-btn-series');
-
-    if (searchBtnSeries && searchInputSeries) {
-        searchBtnSeries.onclick = () => {
-            const q = searchInputSeries.value.trim();
-            if (!q) return;
-            window.location.href = `/1-pages/search-results.html?query=${encodeURIComponent(q)}`;
-        };
-
-        searchInputSeries.addEventListener('input', (e) => {
-            const q = e.target.value;
-            if (searchTimeout) clearTimeout(searchTimeout);
-            if (suggestionTimeout) clearTimeout(suggestionTimeout);
-
-            if (!q || q.length < 2) {
-                showSuggestions([], 'search-suggestions-series');
-                return;
-            }
-
-            suggestionTimeout = setTimeout(async () => {
-                const sug = await fetchSuggestions(q);
-                showSuggestions(sug, 'search-suggestions-series');
-            }, 200);
-        });
-
-        searchInputSeries.addEventListener('keydown', (e) => {
-            if (e.key === 'Enter') {
-                e.preventDefault();
-                const q = searchInputSeries.value.trim();
-                if (!q) return;
-                window.location.href = `/1-pages/search-results.html?query=${encodeURIComponent(q)}`;
+        // Focus: reapririr sugestões se houver texto
+        searchInput.addEventListener('focus', () => {
+            if (blurTimeout) clearTimeout(blurTimeout);
+            const q = searchInput.value.trim();
+            if (q && q.length >= 2) {
+                showSuggestions([], suggestionsBoxId); // Limpar primeiro
+                // Refetch après refocus
+                suggestionTimeout = setTimeout(async () => {
+                    const sug = await fetchSuggestions(q);
+                    showSuggestions(sug, suggestionsBoxId);
+                }, 300);
             }
         });
+
+        // Blur: fechar sugestões após sair do campo
+        searchInput.addEventListener('blur', () => {
+            blurTimeout = setTimeout(() => {
+                showSuggestions([], suggestionsBoxId);
+            }, 250);
+        });
+
+        // Mousedown no dropdown: evitar que blur feche
+        suggestionsBox.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            if (blurTimeout) clearTimeout(blurTimeout);
+        });
     }
+
+    // Setup para FILMES
+    setupSearchHandlers('search-input', 'search-suggestions', 'search-btn');
+
+    // Setup para SÉRIES
+    setupSearchHandlers('search-input-series', 'search-suggestions-series', 'search-btn-series');
 
     console.log('7-home.js initialized');
 });

@@ -125,43 +125,60 @@ async function fetchSuggestions(query) {
         if (!query || query.trim().length < 1) return [];
         const url = `${API_BASE_URL}/search?query=${encodeURIComponent(query)}`;
         const resp = await fetch(url);
-        if (!resp.ok) return [];
+        if (!resp.ok) {
+            console.warn('Erro na busca de sugestões:', resp.status);
+            return [];
+        }
         const data = await resp.json();
-        return (data.results || []).slice(0, 6);
+        const results = (data.results || []).slice(0, 6);
+        console.log(`Sugestões encontradas: ${results.length}`);
+        return results;
     } catch (e) {
-        console.error('Sugestões erro:', e);
+        console.error('Erro ao buscar sugestões:', e);
         return [];
     }
 }
 
 function showSuggestions(items) {
     const box = document.getElementById('search-suggestions');
-    if (!box) return;
+    if (!box) {
+        console.warn('Container de sugestões não encontrado');
+        return;
+    }
+    
     box.innerHTML = '';
+    
     if (!items || items.length === 0) {
         box.style.display = 'none';
         box.setAttribute('aria-hidden', 'true');
         return;
     }
+    
     items.forEach(movie => {
         const item = document.createElement('div');
         item.className = 'search-suggestion-item';
+        
         const title = document.createElement('div');
         title.className = 'search-suggestion-title';
         title.textContent = movie.title || movie.name || 'Título';
+        
         const sub = document.createElement('div');
         sub.className = 'search-suggestion-sub';
-        sub.textContent = movie.release_date ? movie.release_date.substring(0,4) : '';
+        sub.textContent = movie.release_date ? movie.release_date.substring(0, 4) : movie.first_air_date ? movie.first_air_date.substring(0, 4) : '';
+        
         item.appendChild(title);
-        item.appendChild(sub);
+        if (sub.textContent) item.appendChild(sub);
+        
         item.onclick = () => {
             const q = movie.title || movie.name || '';
             showSuggestions([]);
             // Redirect to search results page for consistent UX
             window.location.href = `/1-pages/search-results.html?query=${encodeURIComponent(q)}`;
         };
+        
         box.appendChild(item);
     });
+    
     box.style.display = 'block';
     box.setAttribute('aria-hidden', 'false');
 }
@@ -226,6 +243,8 @@ document.addEventListener('DOMContentLoaded', () => {
     // Search handlers
     const searchInput = document.getElementById('search-input');
     const searchBtn = document.getElementById('search-btn');
+    const suggestionsBox = document.getElementById('search-suggestions');
+    let blurTimeout = null;
 
     if (searchBtn && searchInput) {
         searchBtn.onclick = () => {
@@ -248,11 +267,11 @@ document.addEventListener('DOMContentLoaded', () => {
                 return;
             }
 
-            // fetch suggestions quickly (debounce 200ms)
+            // fetch suggestions quickly (debounce 300ms)
             suggestionTimeout = setTimeout(async () => {
                 const sug = await fetchSuggestions(q);
                 showSuggestions(sug);
-            }, 200);
+            }, 300);
 
             // full search debounce (500ms) - update in-page results (user still on same page)
             searchTimeout = setTimeout(() => {
@@ -270,5 +289,34 @@ document.addEventListener('DOMContentLoaded', () => {
                 window.location.href = `/1-pages/search-results.html?query=${encodeURIComponent(q)}`;
             }
         });
+
+        // Focus: reabrir sugestões se houver texto
+        searchInput.addEventListener('focus', () => {
+            if (blurTimeout) clearTimeout(blurTimeout);
+            const q = searchInput.value.trim();
+            if (q && q.length >= 2) {
+                showSuggestions([]); // Limpa antes
+                // Refetch sugestões ao voltar o foco
+                suggestionTimeout = setTimeout(async () => {
+                    const sug = await fetchSuggestions(q);
+                    showSuggestions(sug);
+                }, 300);
+            }
+        });
+
+        // Blur: fechar sugestões ao sair do campo
+        searchInput.addEventListener('blur', () => {
+            blurTimeout = setTimeout(() => {
+                showSuggestions([]);
+            }, 250);
+        });
+
+        // Mousedown nas sugestões: evitar que blur feche
+        if (suggestionsBox) {
+            suggestionsBox.addEventListener('mousedown', (e) => {
+                e.preventDefault();
+                if (blurTimeout) clearTimeout(blurTimeout);
+            });
+        }
     }
 });

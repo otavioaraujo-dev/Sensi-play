@@ -96,37 +96,110 @@ let suggestionTimeout = null;
 
 async function fetchSuggestions(query) {
     if (!query || query.length < 2) return [];
-    const resp = await fetch(`${API_BASE_URL}/search?query=${encodeURIComponent(query)}`);
-    if (!resp.ok) return [];
-    const data = await resp.json();
-    return (data.results || []).slice(0,6);
+    try {
+        const resp = await fetch(`${API_BASE_URL}/search?query=${encodeURIComponent(query)}`);
+        if (!resp.ok) {
+            console.warn('Erro na busca de sugestões:', resp.status);
+            return [];
+        }
+        const data = await resp.json();
+        const results = (data.results || []).slice(0, 6);
+        console.log(`Sugestões encontradas: ${results.length}`);
+        return results;
+    } catch (e) {
+        console.error('Erro ao buscar sugestões:', e);
+        return [];
+    }
 }
 
 function showSuggestions(items) {
     const box = document.getElementById('search-suggestions');
+    if (!box) {
+        console.warn('Container de sugestões não encontrado');
+        return;
+    }
+    
     box.innerHTML = '';
-    if (!items || items.length === 0) { box.style.display = 'none'; return; }
+    
+    if (!items || items.length === 0) {
+        box.style.display = 'none';
+        box.setAttribute('aria-hidden', 'true');
+        return;
+    }
+    
     items.forEach(it => {
         const div = document.createElement('div');
         div.className = 'search-suggestion-item';
-        div.textContent = (it.title || it.name || '');
+        
+        const title = document.createElement('div');
+        title.className = 'search-suggestion-title';
+        title.textContent = it.title || it.name || 'Título';
+        
+        const sub = document.createElement('div');
+        sub.className = 'search-suggestion-sub';
+        sub.textContent = it.release_date ? it.release_date.substring(0, 4) : it.first_air_date ? it.first_air_date.substring(0, 4) : '';
+        
+        div.appendChild(title);
+        if (sub.textContent) div.appendChild(sub);
+        
         div.onclick = () => {
             window.location.href = `search-results.html?query=${encodeURIComponent(it.title || it.name || '')}`;
         };
+        
         box.appendChild(div);
     });
+    
     box.style.display = 'block';
+    box.setAttribute('aria-hidden', 'false');
 }
 
 if (searchInput) {
+    let blurTimeout = null;
+    const suggestionsBox = document.getElementById('search-suggestions');
+
     searchInput.addEventListener('input', (e) => {
         const q = e.target.value;
         if (suggestionTimeout) clearTimeout(suggestionTimeout);
+        
+        if (!q || q.length < 2) {
+            showSuggestions([]);
+            return;
+        }
+
         suggestionTimeout = setTimeout(async () => {
             const sug = await fetchSuggestions(q);
             showSuggestions(sug);
-        }, 200);
+        }, 300);
     });
+
+    // Focus: reabrir sugestões se houver texto
+    searchInput.addEventListener('focus', () => {
+        if (blurTimeout) clearTimeout(blurTimeout);
+        const q = searchInput.value.trim();
+        if (q && q.length >= 2) {
+            showSuggestions([]); // Limpar primeiro
+            // Refetch após refocus
+            suggestionTimeout = setTimeout(async () => {
+                const sug = await fetchSuggestions(q);
+                showSuggestions(sug);
+            }, 300);
+        }
+    });
+
+    // Blur: fechar sugestões após sair do campo
+    searchInput.addEventListener('blur', () => {
+        blurTimeout = setTimeout(() => {
+            showSuggestions([]);
+        }, 250);
+    });
+
+    // Mousedown no dropdown: evitar que blur feche
+    if (suggestionsBox) {
+        suggestionsBox.addEventListener('mousedown', (e) => {
+            e.preventDefault();
+            if (blurTimeout) clearTimeout(blurTimeout);
+        });
+    }
 }
 if (searchBtn) searchBtn.onclick = () => { const q = searchInput.value.trim(); if (q) window.location.href = `search-results.html?query=${encodeURIComponent(q)}`; };
 

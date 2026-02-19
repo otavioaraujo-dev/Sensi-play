@@ -287,21 +287,27 @@ body.layout-sidebar {
 
 /* ========== BUSCA (Filmes/Séries) ========== */
 
+.search-bar-wrapper {
+    position: relative;
+    display: inline-block;
+    width: 100%;
+    max-width: 800px;
+    margin-bottom: 40px;
+}
+
 .search-bar {
     display: flex;
-    gap: 10px;
-    margin-bottom: 40px;
-    position: relative;
-    flex-wrap: wrap;
+    gap: 0;
+    width: 100%;
 }
 
 .search-bar input {
     flex: 1;
-    min-width: 250px;
+    min-width: 200px;
     padding: 12px 15px;
     background-color: rgba(255, 255, 255, 0.1);
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: 8px 0 0 8px;
     color: var(--text-color);
     font-size: 14px;
     transition: all 0.3s ease;
@@ -321,18 +327,19 @@ body.layout-sidebar {
 .search-bar button {
     padding: 12px 25px;
     background-color: var(--primary-color);
-    border: none;
-    border-radius: 8px;
+    border: 1px solid var(--primary-color);
+    border-radius: 0 8px 8px 0;
     color: white;
     font-weight: 600;
     font-size: 14px;
     cursor: pointer;
     transition: all 0.3s ease;
+    white-space: nowrap;
 }
 
 .search-bar button:hover {
     background-color: #c40812;
-    transform: scale(1.05);
+    border-color: #c40812;
 }
 
 /* ========== SUGGESTIONS DROPDOWN ========== */
@@ -341,26 +348,44 @@ body.layout-sidebar {
     position: absolute;
     top: 100%;
     left: 0;
-    width: 100%;
-    max-width: 500px;
+    right: 0;
     background-color: #1f1f1f;
     border: 1px solid var(--primary-color);
     border-top: none;
     border-radius: 0 0 8px 8px;
     max-height: 300px;
     overflow-y: auto;
-    z-index: 100;
+    z-index: 1000;
     display: none;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.8);
+    margin-top: -1px;
+}
+
+.search-suggestions::-webkit-scrollbar {
+    width: 6px;
+}
+
+.search-suggestions::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.2);
+}
+
+.search-suggestions::-webkit-scrollbar-thumb {
+    background: var(--primary-color);
+    border-radius: 3px;
+}
+
+.search-suggestions::-webkit-scrollbar-thumb:hover {
+    background: #c40812;
 }
 
 .search-suggestion-item {
     padding: 12px 15px;
     cursor: pointer;
-    border-bottom: 1px solid var(--border-color);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     transition: background-color 0.2s ease;
     display: flex;
-    justify-content: space-between;
-    align-items: center;
+    flex-direction: column;
+    gap: 4px;
 }
 
 .search-suggestion-item:last-child {
@@ -368,18 +393,21 @@ body.layout-sidebar {
 }
 
 .search-suggestion-item:hover {
-    background-color: rgba(229, 9, 20, 0.2);
+    background-color: rgba(229, 9, 20, 0.3);
 }
 
 .search-suggestion-title {
     font-weight: 500;
     color: var(--text-color);
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .search-suggestion-sub {
     font-size: 12px;
     color: #888;
-    margin-left: 10px;
 }
 
 /* ========== MODAL ========== */

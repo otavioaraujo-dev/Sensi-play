@@ -11,7 +11,6 @@ export default defineConfig({
   server: {
     port: 3000,
     strictPort: false,  // Se a porta estiver ocupada, usa outra
-    open: '/1-pages/7-home.html',  // Abre automaticamente ao rodar
     proxy: {
       // Proxy automático: qualquer request /api/* vai para http://localhost:8080
       '/api': {
