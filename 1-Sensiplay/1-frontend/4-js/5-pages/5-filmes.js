@@ -3,9 +3,8 @@
 
 // === CONFIGURAÇÕES ===
 // 🔧 DEVELOPMENT: Frontend (Live Server 5500) + Backend (8080) separados
-// API base: usa proxy quando rodando no Vite (porta 3000/5173), senão usa backend direto
-const _origin = window.location.origin || '';
-const API_BASE_URL = (_origin.includes(':3000') || _origin.includes(':5173')) ? '/api/movies' : 'http://localhost:8080/api/movies';
+// API base: usa /api em todos os casos (proxy do Vite em dev, funções serverless na Vercel em prod)
+const API_BASE_URL = '/api/movies';
 const IMG_BASE_URL = 'https://image.tmdb.org/t/p/w500'; // Posters TMDB
 
 // Elementos do DOM

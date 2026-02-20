@@ -1,5 +1,6 @@
 // Configuração de API
-const API_BASE_URL = 'http://localhost:8080/api';
+// Em desenvolvimento (Vite proxy) ou produção (Vercel serverless), usar /api
+const API_BASE_URL = '/api';
 const API_TIMEOUT = 5000;
 const RETRY_ATTEMPTS = 3;
 const RETRY_DELAY = 2000;

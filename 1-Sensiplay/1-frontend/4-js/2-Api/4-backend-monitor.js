@@ -23,7 +23,7 @@ class BackendMonitor {
 
   async checkBackendStatus() {
     try {
-      const response = await fetch('http://localhost:8080/api/movies/popular', {
+      const response = await fetch('/api/movies/popular', {
         method: 'HEAD',
         timeout: 3000,
       });
