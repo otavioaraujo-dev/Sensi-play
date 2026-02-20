@@ -7,7 +7,7 @@ import { defineConfig } from 'vite';
  * - Dev server em http://localhost:5173 (padrão) ou customize abaixo
  */
 export default defineConfig({
-  root: './',  // Serve from current directory (1-frontend)
+  root: './1-pages',  // Serve from current directory (1-frontend)
   server: {
     port: 3000,
     strictPort: false,  // Se a porta estiver ocupada, usa outra
@@ -27,7 +27,8 @@ export default defineConfig({
     fs: {
       strict: false,  // Allow serving files outside root
       allow: ['../../', './1-pages', './3-Css', './2-assets', './4-js'],
-    }
+    },
+    historyApiFallback: true  // Redireciona todas as rotas para index.html
   },
 
   preview: {
@@ -37,8 +38,11 @@ export default defineConfig({
 
   // Otimizações de build (production)
   build: {
-    outDir: 'dist',
+    outDir: '../dist',
     minify: 'terser',
     sourcemap: false,
+    rollupOptions: {
+      input: './1-pages/index.html'
+    }
   }
 });
