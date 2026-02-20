@@ -42,7 +42,15 @@ export default defineConfig({
     minify: 'terser',
     sourcemap: false,
     rollupOptions: {
-      input: './1-pages/index.html'
+      input: {
+        main: './1-pages/index.html',
+        login: './1-pages/2-login.html',
+        register: './1-pages/3-register.html',
+        dashboard: './1-pages/4-dashboard.html',
+        filmes: './1-pages/5-filmes.html',
+        home: './1-pages/7-home.html',
+        searchResults: './1-pages/search-results.html'
+      }
     }
   }
 });
